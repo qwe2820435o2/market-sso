@@ -1,6 +1,7 @@
 package com.kris.sso.service;
 
 import com.kris.sso.pojo.TaotaoResult;
+import com.kris.sso.pojo.TbUser;
 
 /**
  * @author kris
@@ -8,4 +9,5 @@ import com.kris.sso.pojo.TaotaoResult;
  */
 public interface RegisterService {
     TaotaoResult checkData(String param,int type);
+    TaotaoResult register(TbUser user);
 }
