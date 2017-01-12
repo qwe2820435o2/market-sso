@@ -8,6 +8,7 @@ import com.kris.sso.pojo.TbUserExample;
 import com.kris.sso.service.LoginService;
 import com.kris.sso.utils.CookieUtils;
 import com.kris.sso.utils.JsonUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -63,5 +64,21 @@ public class LoginServiceImpl implements LoginService{
         //写cookie
         CookieUtils.setCookie(request,response,"MARKET_TOKEN",token);
         return TaotaoResult.ok(token);
+    }
+
+    @Override
+    public TaotaoResult getUserByToken(String token) {
+        //根据token取用户信息
+        String json = mJedisClient.get(REDIS_SESSION_KEY + ":" + token);
+        //判断是否查询到结果
+        if (StringUtils.isBlank(json)) {
+            return TaotaoResult.build(400, "用户session已经过期");
+        }
+        //把json转换成java对象
+        TbUser user = JsonUtils.jsonToPojo(json, TbUser.class);
+        //更新session的过期时间
+        mJedisClient.expire(REDIS_SESSION_KEY + ":" + token, SESSION_EXPIRE);
+
+        return TaotaoResult.ok(user);
     }
 }
