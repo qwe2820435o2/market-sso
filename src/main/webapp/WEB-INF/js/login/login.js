@@ -384,19 +384,23 @@ $("#loginsubmit").click(function () {
                 if (result) {
                     var obj = eval(result);
                     if (obj.status == 200) {
+                        alert("登录成功");
                     	obj.success = "http://localhost:8084";
                     	if (redirectURL!=null &&redirectURL!="") {
-                    		obj.success=redirectURL;
+                    		//obj.success=redirectURL;
 						}
+                        alert("url:"+obj.success);
                         var isIE = !-[1,];
                         if (isIE) {
+                            alert("IE");
                             var link = document.createElement("a");
                             link.href = obj.success;
                             link.style.display = 'none';
                             document.body.appendChild(link);
                             link.click();
                         } else {
-                            window.location = obj.success;
+                            alert("else");
+                            window.location.href = obj.success;
                         }
                         return;
                     }else{

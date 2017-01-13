@@ -1,11 +1,11 @@
 var TT = TAOTAO = {
 	checkLogin : function(){
-		var _ticket = $.cookie("TT_TICKET");
+		var _ticket = $.cookie("MARKET_TICKET");
 		if(!_ticket){
 			return ;
 		}
 		$.ajax({
-			url : "http://sso.taotao.com/user/query/" + _ticket,
+			url : "http://Localhost:8086/user/token/" + _ticket,
 			dataType : "jsonp",
 			type : "GET",
 			success : function(data){
