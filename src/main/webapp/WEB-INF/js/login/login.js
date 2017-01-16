@@ -387,7 +387,7 @@ $("#loginsubmit").click(function () {
                         alert("登录成功");
                     	obj.success = "http://localhost:8084";
                     	if (redirectURL!=null &&redirectURL!="") {
-                    		//obj.success=redirectURL;
+                    		obj.success=redirectURL;
 						}
                         alert("url:"+obj.success);
                         var isIE = !-[1,];
